@@ -16,6 +16,6 @@ public interface Golonganface extends Generalface {
     public String delete(long id);
     public tbGolongan get(long id);
     public List<tbGolongan> getAll();
-    
+    public List<tbGolongan> searchByGolongan(String golongan);
     
 }
