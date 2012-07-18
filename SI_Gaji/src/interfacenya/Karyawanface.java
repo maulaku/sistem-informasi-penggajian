@@ -16,5 +16,5 @@ public interface Karyawanface extends Generalface {
     public String delete(long  id);
     
     public tbKaryawan get (long id);
-    public List<tbKaryawan> getALL();
+    public List<tbKaryawan> getAll();
 }
