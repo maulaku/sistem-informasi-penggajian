@@ -57,7 +57,6 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
         jLabel2 = new javax.swing.JLabel();
         nama_txt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        bulan_cmb = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         gajipokok_txt = new javax.swing.JTextField();
@@ -79,6 +78,7 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
         golongan_txt = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         kodegaji_cmb = new javax.swing.JComboBox();
+        bulan_txt = new javax.swing.JTextField();
 
         setTitle("Ubah Gaji");
 
@@ -87,13 +87,6 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
         nama_txt.setEditable(false);
 
         jLabel3.setText("Bulan");
-
-        bulan_cmb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember" }));
-        bulan_cmb.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bulan_cmbActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("Golongan");
 
@@ -142,7 +135,7 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(tunjangan2_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Bonus"));
@@ -252,11 +245,11 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(kodegaji_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 133, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(bulan_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44))
+                                .addComponent(bulan_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(82, 82, 82))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nama_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -273,8 +266,8 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(kodegaji_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bulan_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(bulan_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -306,10 +299,6 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bulan_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bulan_cmbActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bulan_cmbActionPerformed
-
     private void hari_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hari_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_hari_txtActionPerformed
@@ -321,7 +310,7 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
 
     private void reset_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reset_btnActionPerformed
         // TODO add your handling code here:
-        bulan_cmb.setSelectedIndex(0);
+        
         tunjangan1_txt.setText("0");
         tunjangan2_txt.setText("0");
         lembur_txt.setText("0");
@@ -340,7 +329,7 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
             String kodeGaji = kodegaji_cmb.getSelectedItem().toString();
             
             String m1 = "Kode Gaji      :   "+kodeGaji+"\n";
-            String m2 = "Bulan          :   "+bulan_cmb.getSelectedItem().toString()+"\n";
+            String m2 = "Bulan          :   "+bulan_txt.getText()+"\n";
             String m3 = "Nama           :   "+nama_txt.getText()+"\n";
             String m4 = "Golongan       :   "+golongan_txt.getText()+"\n";
             String m5 = "Gaji Pokok     :   "+gajipokok_txt.getText()+"\n";
@@ -364,7 +353,7 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
                     Gaji g = new Gaji();
                     
                     g.setKode(kodeGaji);
-                    g.setBulan(bulan_cmb.getSelectedItem().toString());
+                    g.setBulan(bulan_txt.getText());
                     g.setNama(nama_txt.getText());
                     g.setGolongan(golongan_txt.getText());
                     g.setGajipokok(Double.parseDouble(gajipokok_txt.getText()));
@@ -396,7 +385,7 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
         GajiDAO g = new GajiDAO(em);
         
         
-        bulan_cmb.setSelectedItem(g.getByKode(kodegaji_cmb.getSelectedItem().toString()).get(0).getBulan());
+        bulan_txt.setText(g.getByKode(kodegaji_cmb.getSelectedItem().toString()).get(0).getBulan());
         nama_txt.setText(g.getByKode(kodegaji_cmb.getSelectedItem().toString()).get(0).getNama());
         golongan_txt.setText(g.getByKode(kodegaji_cmb.getSelectedItem().toString()).get(0).getGolongan());
         gajipokok_txt.setText(String.valueOf(g.getByKode(kodegaji_cmb.getSelectedItem().toString()).get(0).getGajipokok()));
@@ -409,7 +398,7 @@ public class UbahGajiGUI extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_kodegaji_cmbActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox bulan_cmb;
+    private javax.swing.JTextField bulan_txt;
     private javax.swing.JButton cek_btn;
     private javax.swing.JTextField gajipokok_txt;
     private javax.swing.JTextField golongan_txt;
