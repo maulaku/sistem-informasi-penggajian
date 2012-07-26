@@ -48,6 +48,16 @@ public class Gaji implements Serializable {
     private double bonus;
     @Column(nullable=false)
     private double pajak;
+    @Column(nullable=false)
+    private double gajibersih;
+
+    public double getGajibersih() {
+        return gajibersih;
+    }
+
+    public void setGajibersih(double gajibersih) {
+        this.gajibersih = gajibersih;
+    }
 
     public double getBonus() {
         return bonus;
