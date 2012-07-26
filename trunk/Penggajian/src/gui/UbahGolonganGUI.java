@@ -206,7 +206,7 @@ public class UbahGolonganGUI extends javax.swing.JInternalFrame {
                 g.setGajiPokok(Double.parseDouble(gajipokok_txt.getText()));
                 g.setPajak(Double.parseDouble(pajak_txt.getText()));
                 JOptionPane.showMessageDialog(this, dao.Update(kode_cmb.getSelectedItem().toString(), g));
-                this.binding();
+                
             } catch(NumberFormatException n){
                 message = "Gaji dan Pajak harus diisi dengan Angka";
             }catch (Exception e) {
