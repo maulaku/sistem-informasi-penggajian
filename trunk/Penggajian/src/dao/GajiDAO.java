@@ -18,7 +18,7 @@ public class GajiDAO extends General implements GajiInterface{
     public GajiDAO(EntityManager em){
         super(em);
     }
-
+    
     @Override
     public String Insert(Gaji g) {
         String status = "Gagal Insert";
@@ -28,7 +28,7 @@ public class GajiDAO extends General implements GajiInterface{
             em.getTransaction().commit();
             status = "Sukses Insert";
         } catch (Exception e) {
-            e.printStackTrace();
+            e.getMessage();
         }
         return status;
     }
@@ -55,6 +55,7 @@ public class GajiDAO extends General implements GajiInterface{
             x.setTunjangan2(g.getTunjangan2());
             x.setBonus(g.getBonus());
             x.setPajak(g.getPajak());
+            x.setGajibersih(g.getGajibersih());
             
             
             em.merge(x);
