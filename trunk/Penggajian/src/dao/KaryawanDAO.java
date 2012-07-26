@@ -15,14 +15,14 @@ import javax.persistence.EntityManager;
  * @author Hotasta
  */
 public class KaryawanDAO extends General implements KaryawanInterface {
-    
+
     public KaryawanDAO(EntityManager em){
         super(em);
     }
-
+    
     @Override
     public String Insert(Karyawan k) {
-        String status = "Gagal Insert";
+       String status = "Gagal Insert";
         try {
             em.getTransaction().begin();
             em.persist(k);
@@ -100,7 +100,7 @@ public class KaryawanDAO extends General implements KaryawanInterface {
 
     @Override
     public List<Karyawan> getAll() {
-        List<Karyawan> list = new ArrayList<Karyawan>();
+       List<Karyawan> list = new ArrayList<Karyawan>();
         
         try {
             em.getTransaction().begin();
