@@ -10,11 +10,11 @@
  */
 package gui;
 
-
 import dao.GajiDAO;
+import dao.GolonganDAO;
 import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
@@ -24,19 +24,20 @@ public class LihatGajiGUI extends javax.swing.JInternalFrame {
 
     EntityManager em;
     GajiDAO dao;
+
     /** Creates new form LihatGolonganGUI */
     public LihatGajiGUI(EntityManager em) {
         initComponents();
         this.em = em;
         this.binding();
     }
-    
-    public void binding(){
+
+    public void binding() {
         dao = new GajiDAO(em);
-        String[] title = {"Kode","Bulan","Nama","Golongan","Gaji Pokok","Tunjangan 1","Tunjangan 2","Bonus","Pajak","Gaji Bersih"};
+        String[] title = {"Kode", "Bulan", "Nama", "Golongan", "Gaji Pokok", "Tunjangan 1", "Tunjangan 2", "Bonus", "Pajak", "Gaji Bersih"};
         Object[][] data = new Object[dao.getAll().size()][10];
         for (int i = 0; i < dao.getAll().size(); i++) {
-            
+
             data[i][0] = dao.getAll().get(i).getKode();
             data[i][1] = dao.getAll().get(i).getBulan();
             data[i][2] = dao.getAll().get(i).getNama();
@@ -47,9 +48,9 @@ public class LihatGajiGUI extends javax.swing.JInternalFrame {
             data[i][7] = dao.getAll().get(i).getBonus();
             data[i][8] = dao.getAll().get(i).getPajak();
             data[i][9] = dao.getAll().get(i).getGajibersih();
-            
+
         }
-        
+
         DefaultTableModel model = new DefaultTableModel(data, title);
         tabel.setModel(model);
         this.jScrollPane1.setViewportView(tabel);
@@ -69,6 +70,10 @@ public class LihatGajiGUI extends javax.swing.JInternalFrame {
         tabel = new javax.swing.JTable();
         refresh_btn = new javax.swing.JButton();
         keluar_btn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        s1_cmb = new javax.swing.JComboBox();
+        s2_cmb = new javax.swing.JComboBox();
+        search_btn = new javax.swing.JButton();
 
         setTitle("Lihat Gaji");
 
@@ -97,30 +102,64 @@ public class LihatGajiGUI extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("Urutkan Berdasarkan :");
+
+        s1_cmb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Bulan", "Golongan", "Gaji Bersih" }));
+        s1_cmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                s1_cmbActionPerformed(evt);
+            }
+        });
+
+        search_btn.setText("Lihat");
+        search_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_btnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(s2_cmb, javax.swing.GroupLayout.Alignment.TRAILING, 0, 167, Short.MAX_VALUE)
+                            .addComponent(s1_cmb, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(search_btn)
+                        .addGap(61, 61, 61)
                         .addComponent(refresh_btn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(keluar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE))
+                        .addComponent(keluar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(refresh_btn)
-                    .addComponent(keluar_btn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(237, 237, 237))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(refresh_btn)
+                            .addComponent(keluar_btn)
+                            .addComponent(jLabel1)
+                            .addComponent(s1_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(s2_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(search_btn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -131,7 +170,7 @@ public class LihatGajiGUI extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -147,11 +186,144 @@ public class LihatGajiGUI extends javax.swing.JInternalFrame {
         this.setVisible(false);
     }//GEN-LAST:event_keluar_btnActionPerformed
 
+    private void s1_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_s1_cmbActionPerformed
+        // TODO add your handling code here:
+        s2_cmb.removeAllItems();
+
+        if (s1_cmb.getSelectedIndex() == 0) {
+
+            String[] data = {"Januari", "Februari", "Maret", "April", "Mei",
+                "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+            for (int i = 0; i < data.length; i++) {
+                s2_cmb.addItem(data[i]);
+
+            }
+
+        } else if (s1_cmb.getSelectedIndex() == 1) {
+
+            GolonganDAO dao = new GolonganDAO(em);
+            s2_cmb.removeAllItems();
+            for (int i = 0; i < dao.getAll().size(); i++) {
+
+                s2_cmb.addItem(dao.getAll().get(i).getKodeGolongan());
+
+            }
+
+        } else if (s1_cmb.getSelectedIndex() == 2) {
+            s2_cmb.addItem("Gaji Bersih Ascending");
+            s2_cmb.addItem("Gaji Bersih Descending");
+        }
+
+    }//GEN-LAST:event_s1_cmbActionPerformed
+
+    private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_btnActionPerformed
+        // TODO add your handling code here:
+        GajiDAO dao;
+        if (s2_cmb.getItemCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Pilih Kriteria Dahulu");
+        } else {
+            if (s1_cmb.getSelectedItem().toString().equals("Bulan")) {
+                dao = new GajiDAO(em);
+                String[] title = {"Kode", "Bulan", "Nama", "Golongan", "Gaji Pokok", "Tunjangan 1", "Tunjangan 2", "Bonus", "Pajak", "Gaji Bersih"};
+                Object[][] data = new Object[dao.getByBulan(s2_cmb.getSelectedItem().toString()).size()][10];
+                for (int i = 0; i < dao.getByBulan(s2_cmb.getSelectedItem().toString()).size(); i++) {
+
+                    data[i][0] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getKode();
+                    data[i][1] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getBulan();
+                    data[i][2] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getNama();
+                    data[i][3] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getGolongan();
+                    data[i][4] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getGajipokok();
+                    data[i][5] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getTunjangan1();
+                    data[i][6] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getTunjangan2();
+                    data[i][7] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getBonus();
+                    data[i][8] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getPajak();
+                    data[i][9] = dao.getByBulan(s2_cmb.getSelectedItem().toString()).get(i).getGajibersih();
+
+                }
+
+                DefaultTableModel model = new DefaultTableModel(data, title);
+                tabel.setModel(model);
+                this.jScrollPane1.setViewportView(tabel);
+            } else if (s1_cmb.getSelectedItem().toString().equals("Gaji Bersih")) {
+                if (s2_cmb.getSelectedIndex() == 0) {
+                    dao = new GajiDAO(em);
+                    String[] title = {"Kode", "Bulan", "Nama", "Golongan", "Gaji Pokok", "Tunjangan 1", "Tunjangan 2", "Bonus", "Pajak", "Gaji Bersih"};
+                    Object[][] data = new Object[dao.getByGajiBersihASC().size()][10];
+                    for (int i = 0; i < dao.getByGajiBersihASC().size(); i++) {
+
+                        data[i][0] = dao.getByGajiBersihASC().get(i).getKode();
+                        data[i][1] = dao.getByGajiBersihASC().get(i).getBulan();
+                        data[i][2] = dao.getByGajiBersihASC().get(i).getNama();
+                        data[i][3] = dao.getByGajiBersihASC().get(i).getGolongan();
+                        data[i][4] = dao.getByGajiBersihASC().get(i).getGajipokok();
+                        data[i][5] = dao.getByGajiBersihASC().get(i).getTunjangan1();
+                        data[i][6] = dao.getByGajiBersihASC().get(i).getTunjangan2();
+                        data[i][7] = dao.getByGajiBersihASC().get(i).getBonus();
+                        data[i][8] = dao.getByGajiBersihASC().get(i).getPajak();
+                        data[i][9] = dao.getByGajiBersihASC().get(i).getGajibersih();
+
+                    }
+
+                    DefaultTableModel model = new DefaultTableModel(data, title);
+                    tabel.setModel(model);
+                    this.jScrollPane1.setViewportView(tabel);
+                } else {
+                    dao = new GajiDAO(em);
+                    String[] title = {"Kode", "Bulan", "Nama", "Golongan", "Gaji Pokok", "Tunjangan 1", "Tunjangan 2", "Bonus", "Pajak", "Gaji Bersih"};
+                    Object[][] data = new Object[dao.getByGajiBersihASC().size()][10];
+                    for (int i = 0; i < dao.getByGajiBersihDESC().size(); i++) {
+
+                        data[i][0] = dao.getByGajiBersihDESC().get(i).getKode();
+                        data[i][1] = dao.getByGajiBersihDESC().get(i).getBulan();
+                        data[i][2] = dao.getByGajiBersihDESC().get(i).getNama();
+                        data[i][3] = dao.getByGajiBersihDESC().get(i).getGolongan();
+                        data[i][4] = dao.getByGajiBersihDESC().get(i).getGajipokok();
+                        data[i][5] = dao.getByGajiBersihDESC().get(i).getTunjangan1();
+                        data[i][6] = dao.getByGajiBersihDESC().get(i).getTunjangan2();
+                        data[i][7] = dao.getByGajiBersihDESC().get(i).getBonus();
+                        data[i][8] = dao.getByGajiBersihDESC().get(i).getPajak();
+                        data[i][9] = dao.getByGajiBersihDESC().get(i).getGajibersih();
+
+                    }
+
+                    DefaultTableModel model = new DefaultTableModel(data, title);
+                    tabel.setModel(model);
+                    this.jScrollPane1.setViewportView(tabel);
+                }
+            } else if(s1_cmb.getSelectedItem().toString().equals("Golongan")){
+                dao = new GajiDAO(em);
+                String[] title = {"Kode", "Bulan", "Nama", "Golongan", "Gaji Pokok", "Tunjangan 1", "Tunjangan 2", "Bonus", "Pajak", "Gaji Bersih"};
+                Object[][] data = new Object[dao.getByGolongan(s2_cmb.getSelectedItem().toString()).size()][10];
+                for (int i = 0; i < dao.getByGolongan(s2_cmb.getSelectedItem().toString()).size(); i++) {
+
+                    data[i][0] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getKode();
+                    data[i][1] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getBulan();
+                    data[i][2] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getNama();
+                    data[i][3] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getGolongan();
+                    data[i][4] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getGajipokok();
+                    data[i][5] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getTunjangan1();
+                    data[i][6] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getTunjangan2();
+                    data[i][7] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getBonus();
+                    data[i][8] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getPajak();
+                    data[i][9] = dao.getByGolongan(s2_cmb.getSelectedItem().toString()).get(i).getGajibersih();
+
+                }
+
+                DefaultTableModel model = new DefaultTableModel(data, title);
+                tabel.setModel(model);
+                this.jScrollPane1.setViewportView(tabel);
+            }
+        }
+    }//GEN-LAST:event_search_btnActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton keluar_btn;
     private javax.swing.JButton refresh_btn;
+    private javax.swing.JComboBox s1_cmb;
+    private javax.swing.JComboBox s2_cmb;
+    private javax.swing.JButton search_btn;
     private javax.swing.JTable tabel;
     // End of variables declaration//GEN-END:variables
 }

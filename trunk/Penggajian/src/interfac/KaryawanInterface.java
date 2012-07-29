@@ -18,4 +18,5 @@ public interface KaryawanInterface {
     public String Delete(String NIK);
     public List<Karyawan> getByNIK(String NIK);
     public List<Karyawan> getAll();
+    public List<Karyawan> getByGolongan(String gol);
 }

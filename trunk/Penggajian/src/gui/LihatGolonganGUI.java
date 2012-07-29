@@ -12,8 +12,8 @@ package gui;
 
 import dao.GolonganDAO;
 import javax.persistence.EntityManager;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
 
 /**
  *
@@ -23,26 +23,27 @@ public class LihatGolonganGUI extends javax.swing.JInternalFrame {
 
     EntityManager em;
     GolonganDAO dao;
+
     /** Creates new form LihatGolonganGUI */
     public LihatGolonganGUI(EntityManager em) {
         initComponents();
         this.em = em;
         this.binding();
     }
-    
-    public void binding(){
+
+    public void binding() {
         dao = new GolonganDAO(em);
-        String[] title = {"Kode","Nama","Gaji Pokok","Pajak"};
+        String[] title = {"Kode", "Nama", "Gaji Pokok", "Pajak"};
         Object[][] data = new Object[dao.getAll().size()][4];
         for (int i = 0; i < dao.getAll().size(); i++) {
-            
+
             data[i][0] = dao.getAll().get(i).getKodeGolongan();
             data[i][1] = dao.getAll().get(i).getNamaGolongan();
             data[i][2] = dao.getAll().get(i).getGajiPokok();
             data[i][3] = dao.getAll().get(i).getPajak();
-            
+
         }
-        
+
         DefaultTableModel model = new DefaultTableModel(data, title);
         tabel.setModel(model);
         this.jScrollPane1.setViewportView(tabel);
@@ -62,6 +63,10 @@ public class LihatGolonganGUI extends javax.swing.JInternalFrame {
         tabel = new javax.swing.JTable();
         refresh_btn = new javax.swing.JButton();
         keluar_btn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        search1_cmb = new javax.swing.JComboBox();
+        search2_cmb = new javax.swing.JComboBox();
+        search_btn = new javax.swing.JButton();
 
         setTitle("Lihat Golongan");
 
@@ -92,19 +97,48 @@ public class LihatGolonganGUI extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel1.setText("Urutkan Berdasarkan");
+
+        search1_cmb.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Gaji Pokok", "Nama Golongan" }));
+        search1_cmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search1_cmbActionPerformed(evt);
+            }
+        });
+
+        search2_cmb.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search2_cmbActionPerformed(evt);
+            }
+        });
+
+        search_btn.setText("Lihat");
+        search_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_btnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(295, Short.MAX_VALUE)
-                .addComponent(refresh_btn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(keluar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(search2_cmb, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(search1_cmb, javax.swing.GroupLayout.Alignment.LEADING, 0, 195, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(search_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(refresh_btn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(keluar_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -113,10 +147,15 @@ public class LihatGolonganGUI extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(refresh_btn)
-                    .addComponent(keluar_btn))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(237, 237, 237))
+                    .addComponent(keluar_btn)
+                    .addComponent(jLabel1)
+                    .addComponent(search1_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(search_btn))
+                .addGap(18, 18, 18)
+                .addComponent(search2_cmb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(154, 154, 154))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -127,7 +166,9 @@ public class LihatGolonganGUI extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -143,11 +184,118 @@ public class LihatGolonganGUI extends javax.swing.JInternalFrame {
         this.setVisible(false);
     }//GEN-LAST:event_keluar_btnActionPerformed
 
+    private void search2_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search2_cmbActionPerformed
+        // TODO add your handling code here:
+
+       
+
+
+    }//GEN-LAST:event_search2_cmbActionPerformed
+
+    private void search1_cmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search1_cmbActionPerformed
+        // TODO add your handling code here:
+        search2_cmb.removeAllItems();
+
+        if (search1_cmb.getSelectedIndex() == 0) {
+
+            search2_cmb.addItem("Gaji Pokok Ascending");
+            search2_cmb.addItem("Gaji Pokok Descending");
+
+        } else if (search1_cmb.getSelectedIndex() == 1) {
+
+            search2_cmb.addItem("Nama Golongan Ascending");
+            search2_cmb.addItem("Nama Golongan Descending");
+        }
+    }//GEN-LAST:event_search1_cmbActionPerformed
+
+    private void search_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_btnActionPerformed
+        // TODO add your handling code here:
+        
+         GolonganDAO dao;
+        if (search2_cmb.getItemCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Pilih Kriteria Dahulu");
+        } else {
+            if (search2_cmb.getSelectedItem().toString().equalsIgnoreCase("Gaji Pokok Ascending")) {
+                dao = new GolonganDAO(em);
+                String[] title = {"Kode", "Nama", "Gaji Pokok", "Pajak"};
+                Object[][] data = new Object[dao.getGajiPokokASC().size()][4];
+                for (int i = 0; i < dao.getGajiPokokASC().size(); i++) {
+
+                    data[i][0] = dao.getGajiPokokASC().get(i).getKodeGolongan();
+                    data[i][1] = dao.getGajiPokokASC().get(i).getNamaGolongan();
+                    data[i][2] = dao.getGajiPokokASC().get(i).getGajiPokok();
+                    data[i][3] = dao.getGajiPokokASC().get(i).getPajak();
+
+                }
+
+                DefaultTableModel model = new DefaultTableModel(data, title);
+                tabel.setModel(model);
+                this.jScrollPane1.setViewportView(tabel);
+            }
+            else if(search2_cmb.getSelectedItem().toString().equalsIgnoreCase("Gaji Pokok Descending")){
+                dao = new GolonganDAO(em);
+                String[] title = {"Kode", "Nama", "Gaji Pokok", "Pajak"};
+                Object[][] data = new Object[dao.getGajiPokokDESC().size()][4];
+                for (int i = 0; i < dao.getGajiPokokDESC().size(); i++) {
+
+                    data[i][0] = dao.getGajiPokokDESC().get(i).getKodeGolongan();
+                    data[i][1] = dao.getGajiPokokDESC().get(i).getNamaGolongan();
+                    data[i][2] = dao.getGajiPokokDESC().get(i).getGajiPokok();
+                    data[i][3] = dao.getGajiPokokDESC().get(i).getPajak();
+
+                }
+
+                DefaultTableModel model = new DefaultTableModel(data, title);
+                tabel.setModel(model);
+                this.jScrollPane1.setViewportView(tabel);
+            }
+            else if(search2_cmb.getSelectedItem().toString().equalsIgnoreCase("Nama Golongan Ascending")){
+                dao = new GolonganDAO(em);
+                String[] title = {"Kode", "Nama", "Gaji Pokok", "Pajak"};
+                Object[][] data = new Object[dao.getNamaGolonganASC().size()][4];
+                for (int i = 0; i < dao.getNamaGolonganASC().size(); i++) {
+
+                    data[i][0] = dao.getNamaGolonganASC().get(i).getKodeGolongan();
+                    data[i][1] = dao.getNamaGolonganASC().get(i).getNamaGolongan();
+                    data[i][2] = dao.getNamaGolonganASC().get(i).getGajiPokok();
+                    data[i][3] = dao.getNamaGolonganASC().get(i).getPajak();
+
+                }
+
+                DefaultTableModel model = new DefaultTableModel(data, title);
+                tabel.setModel(model);
+                this.jScrollPane1.setViewportView(tabel);
+            }
+            else if(search2_cmb.getSelectedItem().toString().equalsIgnoreCase("Nama Golongan Descending")){
+                dao = new GolonganDAO(em);
+                String[] title = {"Kode", "Nama", "Gaji Pokok", "Pajak"};
+                Object[][] data = new Object[dao.getNamaGolonganDESC().size()][4];
+                for (int i = 0; i < dao.getNamaGolonganDESC().size(); i++) {
+
+                    data[i][0] = dao.getNamaGolonganDESC().get(i).getKodeGolongan();
+                    data[i][1] = dao.getNamaGolonganDESC().get(i).getNamaGolongan();
+                    data[i][2] = dao.getNamaGolonganDESC().get(i).getGajiPokok();
+                    data[i][3] = dao.getNamaGolonganDESC().get(i).getPajak();
+
+                }
+
+                DefaultTableModel model = new DefaultTableModel(data, title);
+                tabel.setModel(model);
+                this.jScrollPane1.setViewportView(tabel);
+            }
+        }
+        
+    }//GEN-LAST:event_search_btnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton keluar_btn;
     private javax.swing.JButton refresh_btn;
+    private javax.swing.JComboBox search1_cmb;
+    private javax.swing.JComboBox search2_cmb;
+    private javax.swing.JButton search_btn;
     private javax.swing.JTable tabel;
     // End of variables declaration//GEN-END:variables
 }

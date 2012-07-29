@@ -117,5 +117,61 @@ public class GajiDAO extends General implements GajiInterface{
         
         return list;
     }
+
+    @Override
+    public List<Gaji> getByBulan(String bulan) {
+        List<Gaji> list = new ArrayList<Gaji>();
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Gaji p WHERE p.bulan = '"+bulan+"'").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Gaji> getByGolongan(String golongan) {
+        List<Gaji> list = new ArrayList<Gaji>();
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Gaji p WHERE p.golongan = '"+golongan+"'").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public List<Gaji> getByGajiBersihASC() {
+        List<Gaji> list = new ArrayList<Gaji>();
+        
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Gaji p ORDER BY p.gajibersih ASC").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+
+    @Override
+    public List<Gaji> getByGajiBersihDESC() {
+        List<Gaji> list = new ArrayList<Gaji>();
+        
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Gaji p ORDER BY p.gajibersih DESC").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
     
 }
