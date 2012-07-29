@@ -110,5 +110,65 @@ public class GolonganDAO extends General implements GolonganInterface{
         
         return list;
     }
+
+    @Override
+    public List<Golongan> getGajiPokokASC() {
+        List<Golongan> list = new ArrayList<Golongan>();
+        
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Golongan p ORDER BY p.gajiPokok ASC").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+
+    @Override
+    public List<Golongan> getGajiPokokDESC() {
+        List<Golongan> list = new ArrayList<Golongan>();
+        
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Golongan p ORDER BY p.gajiPokok DESC").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+
+    @Override
+    public List<Golongan> getNamaGolonganASC() {
+        List<Golongan> list = new ArrayList<Golongan>();
+        
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Golongan p ORDER BY p.namaGolongan ASC").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
+
+    @Override
+    public List<Golongan> getNamaGolonganDESC() {
+        List<Golongan> list = new ArrayList<Golongan>();
+        
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Golongan p ORDER BY p.namaGolongan DESC").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return list;
+    }
     
 }

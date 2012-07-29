@@ -18,4 +18,10 @@ public interface GajiInterface {
     public String Delete(String kode);
     public List<Gaji> getByKode(String kode);
     public List<Gaji> getAll();
+    
+    public List<Gaji> getByBulan(String bulan);
+    public List<Gaji> getByGolongan(String golongan);
+    public List<Gaji> getByGajiBersihASC();
+    public List<Gaji> getByGajiBersihDESC();
+    
 }

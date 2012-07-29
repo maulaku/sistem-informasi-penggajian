@@ -112,5 +112,18 @@ public class KaryawanDAO extends General implements KaryawanInterface {
         
         return list;
     }
+
+    @Override
+    public List<Karyawan> getByGolongan(String gol) {
+        List<Karyawan> list = new ArrayList<Karyawan>();
+        try {
+            em.getTransaction().begin();
+            list = em.createQuery("SELECT p FROM Karyawan p WHERE p.golongan = '"+gol+"'").getResultList();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     
 }

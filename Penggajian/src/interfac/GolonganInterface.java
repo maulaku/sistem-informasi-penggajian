@@ -18,4 +18,9 @@ public interface GolonganInterface {
     public String Delete(String kode);
     public List<Golongan> getByKode(String kode);
     public List<Golongan> getAll();
+    
+    public List<Golongan> getGajiPokokASC();
+    public List<Golongan> getGajiPokokDESC();
+    public List<Golongan> getNamaGolonganASC();
+    public List<Golongan> getNamaGolonganDESC();
 }
